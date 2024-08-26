@@ -9,9 +9,22 @@ function App() {
   ]);
 
   const [selectedRow, setSelectedRow] = useState(null);
+  const [formName, setFormName] = useState('');
+  const [formEmail, setFormEmail] = useState('');
+  const [formPassword, setFormPassword] = useState('');
 
   function handleRowClick(index) {
     setSelectedRow(selectedRow === index ? null : index);
+    if(selectedRow === index) {
+      setFormName('');
+      setFormEmail('');
+      setFormPassword('');
+    } else {
+      const selectedCustomer = customerList[index];
+      setFormName(selectedCustomer.name);
+      setFormEmail(selectedCustomer.email);
+      setFormPassword(selectedCustomer.pswd);
+    }
   }
 
   const formLabel = selectedRow === null ? "Add New Customer" : "Update Customer";
@@ -46,16 +59,22 @@ function App() {
 
             <form>
                 <label>Name</label>
-                <input type="text"></input>
+                <input type="text" value={formName}></input>
 
                 <label>Email</label>
-                <input type="email"></input>
+                <input type="email"value={formEmail}></input>
 
                 <label>Password</label>
-                <input type="text"></input>
-
+                <input type="text" value={formPassword}></input>
+            <br></br>
+            <button>
+              Delete
+            </button>
             <button type="submit">
-                Submit
+              Add
+            </button>
+            <button>
+              Cancel
             </button>
         </form>
     </div>
