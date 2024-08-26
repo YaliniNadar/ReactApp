@@ -27,6 +27,18 @@ function App() {
     }
   }
 
+  const handleAddClick = () => {
+    console.log('Add btn clicked');
+  };
+
+  const handleDeleteClick = () => {
+    console.log('Delete btn clicked');
+  };
+
+  const handleCancelClick = () => {
+    console.log('Cancel btn clicked');
+  };
+
   const formLabel = selectedRow === null ? "Add New Customer" : "Update Customer";
 
   return (
@@ -59,21 +71,21 @@ function App() {
 
             <form>
                 <label>Name</label>
-                <input type="text" value={formName}></input>
+                <input type="text" value={formName} readOnly></input>
 
                 <label>Email</label>
-                <input type="email"value={formEmail}></input>
+                <input type="email"value={formEmail} readOnly></input>
 
                 <label>Password</label>
-                <input type="text" value={formPassword}></input>
+                <input type="text" value={formPassword} readOnly></input>
             <br></br>
-            <button>
+            <button onClick={handleDeleteClick}>
               Delete
             </button>
-            <button type="submit">
+            <button onClick={handleAddClick}>
               Add
             </button>
-            <button>
+            <button onClick={handleCancelClick}>
               Cancel
             </button>
         </form>
