@@ -43,6 +43,7 @@ function App() {
 
   return (
     <div className="App">
+      <div className='list-box'>
       <h1>Customer List</h1>
       <table>
                 <thead>
@@ -66,6 +67,7 @@ function App() {
                 ))}
                 </tbody>
             </table> 
+            </div>
 
             <h3>{formLabel}</h3>
 

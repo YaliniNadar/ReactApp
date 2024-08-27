@@ -22,9 +22,20 @@ td {
 table {
 	text-align: left;
 	border-collapse: collapse;
+  background-color: white;
+  margin: 0 auto;
+
 }
 
 thead {
 	border-block-end: 2px solid;
 	background: whitesmoke;
+}
+
+.list-box {
+  border: 2px; 
+  padding:10px;
+  background-color: #C0C0C0;
+  border-radius: 10px;
+  display: inline-block;
 }
