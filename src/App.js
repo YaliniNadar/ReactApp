@@ -45,7 +45,8 @@ function App() {
 
   return (
     <div className="App">
-      <h3>Customer List</h3>
+      <div className='list-box'>
+      <h1>Customer List</h1>
       <table>
                 <thead>
                 <tr>
@@ -70,7 +71,6 @@ function App() {
             </table> 
           <div id="formDiv">
           <h3>{formLabel}</h3>
-
 <form>
   <table>
       <tr>
