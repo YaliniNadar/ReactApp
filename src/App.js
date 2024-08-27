@@ -36,7 +36,9 @@ function App() {
   };
 
   const handleCancelClick = () => {
-    console.log('Cancel btn clicked');
+    setFormName('');
+    setFormEmail('');
+    setFormPassword('');
   };
 
   const formLabel = selectedRow === null ? "Add New Customer" : "Update Customer";
