@@ -7,6 +7,7 @@ import CustomerTable from './components/CustomerTable';
 function App() {
 
   let blankCustomer = {"id": -1, "name":"", "email": "", "password": ""};
+  const [currId, setCurrID] = useState(3);
   const [selectedRow, setSelectedRow] = useState(null);
   const [formCustomer, setFormCustomer] = useState(blankCustomer);
 
@@ -14,8 +15,8 @@ function App() {
 
   const handleInputChange = function (event) {
     console.log("in handleInputChange()");
-    const name = event.target.name;
-    const value = event.target.value;
+    const {name, value} = event.target;
+    console.log(`Updating ${name} with ${value}`)
     let newFormObject = {...formCustomer}
     newFormObject[name] = value;
     setFormCustomer(newFormObject);
@@ -34,20 +35,27 @@ function App() {
   }
 
   let handleAddClick = function() {
+
+    if(!formCustomer.name || !formCustomer.email || !formCustomer.password) {
+      alert("Please input all fields");
+      return;
+    }
    
     console.log('Add btn clicked');
     if(selectedRow === null) {
       //call post
-
-      console.log(formCustomer);
-      post(formCustomer);
+      setCurrID((prevId) => prevId + 1);
+      const data = {...formCustomer, id: currId}
+      console.log(data);
+      post(data);
     } else {
       //call put
       console.log(formCustomer);
       const selectedCustomer = customers[selectedRow];
       put(selectedCustomer.id, formCustomer);
     }
-   setFormCustomer(formCustomer);
+   setFormCustomer(blankCustomer);
+   setSelectedRow(null);
   };
   
   let handleDeleteClick = function () {
@@ -85,42 +93,20 @@ function App() {
           handleRowClick={handleRowClick}
           selectedRow={selectedRow}>
       </CustomerTable>
-          <div className='wrapper'>        
-          <div className='list-box'>
-          <h3>{formLabel}</h3>
-<form>
-  <table>
-      <tr>
-        <td>Name: </td>
-        <td>
-        <input id="nameText" name="name" type="text" value={formCustomer.name} onChange={(e) => handleInputChange(e)}></input>
-        </td>
-      </tr>
-      <tr>
-        <td>Email: </td>
-        <td>
-        <input type="email" name="email" value={formCustomer.email} onChange={(e) => handleInputChange(e)}></input>
-        </td>
-      </tr>
-      <tr>                    
-        <td>Password: </td>
-        <td>
-        <input type="text" name="password" value={formCustomer.password} onChange={(e) => handleInputChange(e)}></input>
-        </td>
-      </tr>
       
-  </table>
+      <CustomerAddUpdateForm
+      
+        formCustomer={formCustomer}
+        formLabel={formLabel}
+        handleInputChange={handleInputChange}
+        handleAddClick={handleAddClick}
+        handleCancelClick={handleCancelClick}
+        handleDeleteClick={handleDeleteClick}
+      >
 
-  <input type="button" value="Delete" onClick={handleDeleteClick}>
-        </input>
-        <input type="button" value="Save" onClick={handleAddClick}>
-        </input>
-        <input type="button" value="Cancel" onClick={handleCancelClick}>
-        </input>
+      
 
-      </form>
-        </div>
-        </div>
+      </CustomerAddUpdateForm>
             
     </div>
     </div>
