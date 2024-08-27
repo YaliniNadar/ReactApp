@@ -36,7 +36,9 @@ function App() {
   };
 
   const handleCancelClick = () => {
-    console.log('Cancel btn clicked');
+    setFormName('');
+    setFormEmail('');
+    setFormPassword('');
   };
 
   const formLabel = selectedRow === null ? "Add New Customer" : "Update Customer";
@@ -67,30 +69,43 @@ function App() {
                 ))}
                 </tbody>
             </table> 
-            </div>
+          <div id="formDiv">
+          <h3>{formLabel}</h3>
+<form>
+  <table>
+      <tr>
+        <td>Name: </td>
+        <td>
+        <input type="text" value={formName} readOnly></input>
+        </td>
+      </tr>
+      <tr>
+        <td>Email: </td>
+        <td>
+        <input type="email"value={formEmail} readOnly></input>
+        </td>
+      </tr>
+      <tr>                    
+        <td>Password: </td>
+        <td>
+        <input type="text" value={formPassword} readOnly></input>
+        </td>
+      </tr>
+      
+  </table>
+  <button onClick={handleDeleteClick}>
+          Delete
+        </button>
+        <button onClick={handleAddClick}>
+         Add
+        </button>
+        <button onClick={handleCancelClick}>
+          Cancel
+        </button>
 
-            <h3>{formLabel}</h3>
-
-            <form>
-                <label>Name</label>
-                <input type="text" value={formName} readOnly></input>
-
-                <label>Email</label>
-                <input type="email"value={formEmail} readOnly></input>
-
-                <label>Password</label>
-                <input type="text" value={formPassword} readOnly></input>
-            <br></br>
-            <button onClick={handleDeleteClick}>
-              Delete
-            </button>
-            <button onClick={handleAddClick}>
-              Add
-            </button>
-            <button onClick={handleCancelClick}>
-              Cancel
-            </button>
-        </form>
+</form>
+          </div>
+            
     </div>
   );
 }
