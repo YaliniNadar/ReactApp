@@ -69,6 +69,7 @@ function App() {
                 ))}
                 </tbody>
             </table> 
+          </div>
           <div id="formDiv">
           <h3>{formLabel}</h3>
 <form>
