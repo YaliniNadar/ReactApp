@@ -46,11 +46,17 @@ function App() {
   };
 
   
-  const handleDeleteClick = (e, index) => {
-    e.preventDefault();
-    const test = deleteById(index);
-    console.log(test);
-    // alert(index);
+  
+  let handleDeleteClick = function () {
+    if(formCustomer.id >= 0){
+      deleteById(formCustomer.id);
+      setSelectedRow(null);
+
+    } else {
+      alert("Please Select a Customer to Delete");
+    }
+    setFormCustomer(blankCustomer);
+    
   }
 
   const handleCancelClick = () => {
@@ -122,7 +128,7 @@ function App() {
       </tr>
       
   </table>
-  <button type="button" onClick={(e) => handleDeleteClick(e, formCustomer.id)}>
+  <button type="button" value="Delete" onClick={handleDeleteClick}>
           Delete
         </button>
         <button onClick={handleAddClick}>
