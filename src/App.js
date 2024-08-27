@@ -4,29 +4,21 @@ import { useState, useEffect } from 'react';
 import { getAll } from './memdb.js';
 
 function App() {
-  const [customerList, setCustomerList] = useState([
-    { name: 'Yalini Nadar', email: "yalini.nadar@abc.com", pswd: "1234" },
-    { name: 'Donnis Marshall', email: "donnis.marshall@abc.com", pswd: "password" },
-    { name: 'Ted Mosby', email: "ted.mosby@abc.com", pswd: "himym" },
-  ]);
 
   const [selectedRow, setSelectedRow] = useState(null);
-  const [formName, setFormName] = useState('');
-  const [formEmail, setFormEmail] = useState('');
-  const [formPassword, setFormPassword] = useState('');
+  const [formCustomer, setFormCustomer] = useState({ name: '', email: "", password: "" })
+
   const [customers, setCustomers] = useState([]);
 
   function handleRowClick(index) {
     setSelectedRow(selectedRow === index ? null : index);
     if(selectedRow === index) {
-      setFormName('');
-      setFormEmail('');
-      setFormPassword('');
+
+      setFormCustomer({ name: '', email: "", password: "" });
     } else {
-      const selectedCustomer = customerList[index];
-      setFormName(selectedCustomer.name);
-      setFormEmail(selectedCustomer.email);
-      setFormPassword(selectedCustomer.pswd);
+      const selectedCustomer = customers[index];
+
+      setFormCustomer({ name: selectedCustomer.name, email: selectedCustomer.email, password: selectedCustomer.password })
     }
   }
 
@@ -34,14 +26,12 @@ function App() {
     console.log('Add btn clicked');
   };
 
-  const handleDeleteClick = () => {
+  const handleDeleteClick = (index) => {
     console.log('Delete btn clicked');
   };
 
   const handleCancelClick = () => {
-    setFormName('');
-    setFormEmail('');
-    setFormPassword('');
+    setFormCustomer({ name: '', email: "", password: "" });
   };
 
   useEffect(() => {
@@ -92,19 +82,19 @@ function App() {
       <tr>
         <td>Name: </td>
         <td>
-        <input type="text" value={formName} readOnly></input>
+        <input type="text" value={formCustomer.name} readOnly></input>
         </td>
       </tr>
       <tr>
         <td>Email: </td>
         <td>
-        <input type="email"value={formEmail} readOnly></input>
+        <input type="email"value={formCustomer.email} readOnly></input>
         </td>
       </tr>
       <tr>                    
         <td>Password: </td>
         <td>
-        <input type="text" value={formPassword} readOnly></input>
+        <input type="text" value={formCustomer.password} readOnly></input>
         </td>
       </tr>
       
