@@ -57,6 +57,7 @@ function App() {
 
   return (
     <div className="App">
+      <div className='fullbox'>
       <div className='list-box'>
       <h1>Customer List</h1>
       <table>
@@ -82,7 +83,9 @@ function App() {
                 </tbody>
             </table> 
           </div>
-          <div id="formDiv">
+
+          <div className='wrapper'>        
+          <div className='list-box'>
           <h3>{formLabel}</h3>
 <form>
   <table>
@@ -116,9 +119,11 @@ function App() {
           Cancel
         </button>
 
-</form>
-          </div>
+      </form>
+        </div>
+        </div>
             
+    </div>
     </div>
   );
 }
