@@ -1,11 +1,11 @@
 import './App.css';
+import CustomerAddUpdateForm from './components/CustomerAddUpdateForm';
 import {get, getAll, deleteById, post, put} from './memdb';
 import { useState, useEffect } from 'react';
 
 function App() {
 
   let blankCustomer = {"id": -1, "name":"", "email": "", "password": ""};
-  const [currId, setCurrID] = useState(3);
   const [selectedRow, setSelectedRow] = useState(null);
   const [formCustomer, setFormCustomer] = useState(blankCustomer);
 
@@ -13,8 +13,8 @@ function App() {
 
   const handleInputChange = function (event) {
     console.log("in handleInputChange()");
-    const {name, value} = event.target;
-    console.log(`Updating ${name} with ${value}`);
+    const name = event.target.name;
+    const value = event.target.value;
     let newFormObject = {...formCustomer}
     newFormObject[name] = value;
     setFormCustomer(newFormObject);
@@ -37,19 +37,17 @@ function App() {
     console.log('Add btn clicked');
     if(selectedRow === null) {
       //call post
-      setCurrID((prevId) => prevId + 1);
-      const data = {...formCustomer, id: currId}
-      console.log(data);
-      post(data);
+
+      console.log(formCustomer);
+      post(formCustomer);
     } else {
       //call put
       console.log(formCustomer);
-      put(formCustomer.id, formCustomer);
+      const selectedCustomer = customers[selectedRow];
+      put(selectedCustomer.id, formCustomer);
     }
-    setFormCustomer(blankCustomer);
-    setSelectedRow(null);
+   setFormCustomer(formCustomer);
   };
-
   
   
   let handleDeleteClick = function () {
@@ -108,42 +106,14 @@ function App() {
             </table> 
           </div>
 
-          <div className='wrapper'>        
-          <div className='list-box'>
-          <h3>{formLabel}</h3>
-<form>
-  <table>
-      <tr>
-        <td>Name: </td>
-        <td>
-        <input id="nameText" name="name" type="text" value={formCustomer.name} onChange={(e) => handleInputChange(e)}></input>
-        </td>
-      </tr>
-      <tr>
-        <td>Email: </td>
-        <td>
-        <input type="email" name="email" value={formCustomer.email} onChange={(e) => handleInputChange(e)}></input>
-        </td>
-      </tr>
-      <tr>                    
-        <td>Password: </td>
-        <td>
-        <input type="text" name="password" value={formCustomer.password} onChange={(e) => handleInputChange(e)}></input>
-        </td>
-      </tr>
-      
-  </table>
+          <CustomerAddUpdateForm formLabel={formLabel}
+                                  formCustomer={formCustomer}
+                                  handleInputChange={handleInputChange}
+                                  handleDelete={handleDeleteClick}
+                                  handleAddClick={handleAddClick}
+                                  handleCancelClick={handleCancelClick}>
 
-  <input type="button" value="Delete" onClick={handleDeleteClick}>
-        </input>
-        <input type="button" value="Save" onClick={handleAddClick}>
-        </input>
-        <input type="button" value="Cancel" onClick={handleCancelClick}>
-        </input>
-
-      </form>
-        </div>
-        </div>
+          </CustomerAddUpdateForm>
             
     </div>
     </div>
