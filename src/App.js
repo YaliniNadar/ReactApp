@@ -45,7 +45,7 @@ function App() {
 
   return (
     <div className="App">
-      <h1>Customer List</h1>
+      <h3>Customer List</h3>
       <table>
                 <thead>
                 <tr>
@@ -68,29 +68,44 @@ function App() {
                 ))}
                 </tbody>
             </table> 
+          <div id="formDiv">
+          <h3>{formLabel}</h3>
 
-            <h3>{formLabel}</h3>
+<form>
+  <table>
+      <tr>
+        <td>Name: </td>
+        <td>
+        <input type="text" value={formName} readOnly></input>
+        </td>
+      </tr>
+      <tr>
+        <td>Email: </td>
+        <td>
+        <input type="email"value={formEmail} readOnly></input>
+        </td>
+      </tr>
+      <tr>                    
+        <td>Password: </td>
+        <td>
+        <input type="text" value={formPassword} readOnly></input>
+        </td>
+      </tr>
+      
+  </table>
+  <button onClick={handleDeleteClick}>
+          Delete
+        </button>
+        <button onClick={handleAddClick}>
+         Add
+        </button>
+        <button onClick={handleCancelClick}>
+          Cancel
+        </button>
 
-            <form>
-                <label>Name</label>
-                <input type="text" value={formName} readOnly></input>
-
-                <label>Email</label>
-                <input type="email"value={formEmail} readOnly></input>
-
-                <label>Password</label>
-                <input type="text" value={formPassword} readOnly></input>
-            <br></br>
-            <button onClick={handleDeleteClick}>
-              Delete
-            </button>
-            <button onClick={handleAddClick}>
-              Add
-            </button>
-            <button onClick={handleCancelClick}>
-              Cancel
-            </button>
-        </form>
+</form>
+          </div>
+            
     </div>
   );
 }
