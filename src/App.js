@@ -16,6 +16,15 @@ function App() {
   const [formPassword, setFormPassword] = useState('');
   const [customers, setCustomers] = useState([]);
 
+  const handleInputChange = function (event) {
+    console.log("in handleInputChange()");
+    const name = event.target.name;
+    const value = event.target.value;
+    let newFormObject = {...formObject}
+    newFormObject[name] = value;
+    setFormObject(newFormObject);
+  }
+
   function handleRowClick(index) {
     setSelectedRow(selectedRow === index ? null : index);
     if(selectedRow === index) {
@@ -23,10 +32,10 @@ function App() {
       setFormEmail('');
       setFormPassword('');
     } else {
-      const selectedCustomer = customerList[index];
+      const selectedCustomer = customers[index];
       setFormName(selectedCustomer.name);
       setFormEmail(selectedCustomer.email);
-      setFormPassword(selectedCustomer.pswd);
+      setFormPassword(selectedCustomer.password);
     }
   }
 
@@ -92,13 +101,13 @@ function App() {
       <tr>
         <td>Name: </td>
         <td>
-        <input type="text" value={formName} readOnly></input>
+        <input type="text" value={formName} onChange={(e) => handleInputChange(e)}></input>
         </td>
       </tr>
       <tr>
         <td>Email: </td>
         <td>
-        <input type="email"value={formEmail} readOnly></input>
+        <input type="email"value={formEmail} onChange={(e) => handleInputChange(e)}></input>
         </td>
       </tr>
       <tr>                    
