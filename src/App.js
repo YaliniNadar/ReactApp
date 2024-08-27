@@ -1,11 +1,10 @@
 import './App.css';
-import './memdb.js';
+import {get, getAll, deleteById, post, put} from './memdb';
 import { useState, useEffect } from 'react';
-import { getAll } from './memdb.js';
 
 function App() {
 
-  let blankCustomer = {"id": -1, "name":"", "email": "", "password": ""}
+  let blankCustomer = {"id": -1, "name":"", "email": "", "password": ""};
   const [selectedRow, setSelectedRow] = useState(null);
   const [formCustomer, setFormCustomer] = useState(blankCustomer);
 
@@ -13,11 +12,11 @@ function App() {
 
   const handleInputChange = function (event) {
     console.log("in handleInputChange()");
-    const name = event.target.name;
-    const value = event.target.value;
-    let newFormObject = {...customers};
-    newFormObject[name] = value;
-    setFormCustomer(newFormObject);
+    const {name, value} = event.target;
+    setFormCustomer((prevFormdata) => ({
+      ...prevFormdata,
+      [name]: value
+    }));
   }
 
   function handleRowClick(index) {
@@ -32,17 +31,20 @@ function App() {
     }
   }
 
-  const handleAddClick = (e) => {
+  let handleAddClick = function() {
+   
     console.log('Add btn clicked');
-    // if(formLabel === 'Add New Customer') {
-    //   //call post
-    //   post()
-    // } else {
-    //   //call put
-    //   const selectedCustomer = customers[index];
+    if(selectedRow === null) {
+      //call post
 
-    //   put(index, selectedCustomer);
-    // }
+      console.log(formCustomer);
+      post(formCustomer);
+    } else {
+      //call put
+      console.log(formCustomer);
+      put(formCustomer.id, formCustomer);
+    }
+    setFormCustomer(blankCustomer);
   };
 
   const handleDeleteClick = (index) => {
@@ -57,7 +59,7 @@ function App() {
     getCustomers();
   })
 
-  const getCustomers = function(){
+  const getCustomers = function(){        
     //log("in getCustomers()");
     setCustomers(getAll());
   }
@@ -118,15 +120,12 @@ function App() {
       </tr>
       
   </table>
-  <button onClick={handleDeleteClick}>
-          Delete
-        </button>
-        <button onClick={handleAddClick}>
-         Add
-        </button>
-        <button onClick={handleCancelClick}>
-          Cancel
-        </button>
+  <input type="button" value="Delete" onClick={handleDeleteClick}>
+        </input>
+        <input type="button" value="Save" onClick={handleAddClick}>
+        </input>
+        <input type="button" value="Cancel" onClick={handleCancelClick}>
+        </input>
 
       </form>
         </div>
