@@ -1,7 +1,7 @@
 import './App.css';
 import './memdb.js';
 import { useState, useEffect } from 'react';
-import { getAll } from './memdb.js';
+import { deleteById, getAll } from './memdb.js';
 
 function App() {
 
@@ -28,7 +28,7 @@ function App() {
     } else {
       const selectedCustomer = customers[index];
 
-      setFormCustomer({ name: selectedCustomer.name, email: selectedCustomer.email, password: selectedCustomer.password })
+      setFormCustomer({ id: selectedCustomer.id, name: selectedCustomer.name, email: selectedCustomer.email, password: selectedCustomer.password })
     }
   }
 
@@ -45,9 +45,19 @@ function App() {
     // }
   };
 
-  const handleDeleteClick = (index) => {
-    console.log('Delete btn clicked');
-  };
+  
+  
+  let handleDeleteClick = function () {
+    if(formCustomer.id >= 0){
+      deleteById(formCustomer.id);
+      setSelectedRow(null);
+
+    } else {
+      alert("Please Select a Customer to Delete");
+    }
+    setFormCustomer(blankCustomer);
+    
+  }
 
   const handleCancelClick = () => {
     setFormCustomer(blankCustomer);
@@ -118,7 +128,7 @@ function App() {
       </tr>
       
   </table>
-  <button onClick={handleDeleteClick}>
+  <button type="button" value="Delete" onClick={handleDeleteClick}>
           Delete
         </button>
         <button onClick={handleAddClick}>
