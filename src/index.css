@@ -40,7 +40,17 @@ thead {
   display: inline-block;
 }
 
-#formDiv {
-  text-align: left;
-	border-collapse: collapse;
+.wrapper {
+  display: block;
+  margin-bottom: 10px;
+  padding: 20px;
+}
+
+.fullbox {
+  border: 2px; 
+  padding:50px;
+  background-color: #dcdcdc;
+  border-radius: 8px;
+  display: inline-block;
+  
 }
