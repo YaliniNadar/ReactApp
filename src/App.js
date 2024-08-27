@@ -1,5 +1,7 @@
 import './App.css';
-import { useState } from 'react';
+import './memdb.js';
+import { useState, useEffect } from 'react';
+import { getAll } from './memdb.js';
 
 function App() {
   const [customerList, setCustomerList] = useState([
@@ -12,6 +14,7 @@ function App() {
   const [formName, setFormName] = useState('');
   const [formEmail, setFormEmail] = useState('');
   const [formPassword, setFormPassword] = useState('');
+  const [customers, setCustomers] = useState([]);
 
   function handleRowClick(index) {
     setSelectedRow(selectedRow === index ? null : index);
@@ -41,6 +44,15 @@ function App() {
     setFormPassword('');
   };
 
+  useEffect(() => {
+    getCustomers();
+  })
+
+  const getCustomers = function(){
+    //log("in getCustomers()");
+    setCustomers(getAll());
+  }
+
   const formLabel = selectedRow === null ? "Add New Customer" : "Update Customer";
 
   return (
@@ -57,14 +69,14 @@ function App() {
                 </tr>
                 </thead>
                 <tbody>
-                {customerList.map((customer, index) => (
+                {customers.map((customer, index) => (
                     <tr key={index} onClick={() => handleRowClick(index)} 
                     style={{ fontWeight: selectedRow === index ? 'bold' : 'normal'}}
                     >
                     <td>{index+1}</td>
                     <td>{customer.name}</td>
                     <td>{customer.email}</td>
-                    <td>{customer.pswd}</td>
+                    <td>{customer.password}</td>
                     </tr>
                 ))}
                 </tbody>
