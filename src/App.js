@@ -5,16 +5,26 @@ import { getAll } from './memdb.js';
 
 function App() {
 
+  let blankCustomer = {"id": -1, "name":"", "email": "", "password": ""}
   const [selectedRow, setSelectedRow] = useState(null);
-  const [formCustomer, setFormCustomer] = useState({ name: '', email: "", password: "" })
+  const [formCustomer, setFormCustomer] = useState(blankCustomer);
 
   const [customers, setCustomers] = useState([]);
+
+  const handleInputChange = function (event) {
+    console.log("in handleInputChange()");
+    const name = event.target.name;
+    const value = event.target.value;
+    let newFormObject = {...customers};
+    newFormObject[name] = value;
+    setFormCustomer(newFormObject);
+  }
 
   function handleRowClick(index) {
     setSelectedRow(selectedRow === index ? null : index);
     if(selectedRow === index) {
 
-      setFormCustomer({ name: '', email: "", password: "" });
+      setFormCustomer(blankCustomer);
     } else {
       const selectedCustomer = customers[index];
 
@@ -22,8 +32,17 @@ function App() {
     }
   }
 
-  const handleAddClick = () => {
+  const handleAddClick = (e) => {
     console.log('Add btn clicked');
+    // if(formLabel === 'Add New Customer') {
+    //   //call post
+    //   post()
+    // } else {
+    //   //call put
+    //   const selectedCustomer = customers[index];
+
+    //   put(index, selectedCustomer);
+    // }
   };
 
   const handleDeleteClick = (index) => {
@@ -31,7 +50,7 @@ function App() {
   };
 
   const handleCancelClick = () => {
-    setFormCustomer({ name: '', email: "", password: "" });
+    setFormCustomer(blankCustomer);
   };
 
   useEffect(() => {
@@ -82,19 +101,19 @@ function App() {
       <tr>
         <td>Name: </td>
         <td>
-        <input type="text" value={formCustomer.name} readOnly></input>
+        <input id="nameText" type="text" value={formCustomer.name} onChange={(e) => handleInputChange(e)}></input>
         </td>
       </tr>
       <tr>
         <td>Email: </td>
         <td>
-        <input type="email"value={formCustomer.email} readOnly></input>
+        <input type="email"value={formCustomer.email} onChange={(e) => handleInputChange(e)}></input>
         </td>
       </tr>
       <tr>                    
         <td>Password: </td>
         <td>
-        <input type="text" value={formCustomer.password} readOnly></input>
+        <input type="text" value={formCustomer.password} onChange={(e) => handleInputChange(e)}></input>
         </td>
       </tr>
       
