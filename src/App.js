@@ -27,7 +27,7 @@ function App() {
     } else {
       const selectedCustomer = customers[index];
 
-      setFormCustomer({ name: selectedCustomer.name, email: selectedCustomer.email, password: selectedCustomer.password })
+      setFormCustomer({ id: selectedCustomer.id, name: selectedCustomer.name, email: selectedCustomer.email, password: selectedCustomer.password })
     }
   }
 
@@ -47,9 +47,19 @@ function App() {
     setFormCustomer(blankCustomer);
   };
 
-  const handleDeleteClick = (index) => {
-    console.log('Delete btn clicked');
-  };
+  
+  
+  let handleDeleteClick = function () {
+    if(formCustomer.id >= 0){
+      deleteById(formCustomer.id);
+      setSelectedRow(null);
+
+    } else {
+      alert("Please Select a Customer to Delete");
+    }
+    setFormCustomer(blankCustomer);
+    
+  }
 
   const handleCancelClick = () => {
     setFormCustomer(blankCustomer);
@@ -120,6 +130,7 @@ function App() {
       </tr>
       
   </table>
+
   <input type="button" value="Delete" onClick={handleDeleteClick}>
         </input>
         <input type="button" value="Save" onClick={handleAddClick}>
