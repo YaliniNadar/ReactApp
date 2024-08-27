@@ -13,19 +13,19 @@ function CustomerAddUpdateForm(props) {
       <tr>
         <td>Name: </td>
         <td>
-        <input id="nameText" type="text" value={props.formCustomer.name} onChange={(e) => props.handleInputChange(e)}></input>
+        <input id="nameText" name="name" type="text" value={props.formCustomer.name} onChange={(e) => props.handleInputChange(e)}></input>
         </td>
       </tr>
       <tr>
         <td>Email: </td>
         <td>
-        <input type="email"value={props.formCustomer.email} onChange={(e) => props.handleInputChange(e)}></input>
+        <input type="email" name="email" value={props.formCustomer.email} onChange={(e) => props.handleInputChange(e)}></input>
         </td>
       </tr>
       <tr>                    
         <td>Password: </td>
         <td>
-        <input type="text" value={props.formCustomer.password} onChange={(e) => props.handleInputChange(e)}></input>
+        <input type="text" name="password" value={props.formCustomer.password} onChange={(e) => props.handleInputChange(e)}></input>
         </td>
       </tr>
       
