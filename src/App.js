@@ -1,4 +1,5 @@
 import './App.css';
+import CustomerAddUpdateForm from './components/CustomerAddUpdateForm';
 import {get, getAll, deleteById, post, put} from './memdb';
 import { useState, useEffect } from 'react';
 import CustomerTable from './components/CustomerTable';
@@ -6,7 +7,6 @@ import CustomerTable from './components/CustomerTable';
 function App() {
 
   let blankCustomer = {"id": -1, "name":"", "email": "", "password": ""};
-  const [currId, setCurrID] = useState(3);
   const [selectedRow, setSelectedRow] = useState(null);
   const [formCustomer, setFormCustomer] = useState(blankCustomer);
 
@@ -14,8 +14,8 @@ function App() {
 
   const handleInputChange = function (event) {
     console.log("in handleInputChange()");
-    const {name, value} = event.target;
-    console.log(`Updating ${name} with ${value}`);
+    const name = event.target.name;
+    const value = event.target.value;
     let newFormObject = {...formCustomer}
     newFormObject[name] = value;
     setFormCustomer(newFormObject);
@@ -38,17 +38,16 @@ function App() {
     console.log('Add btn clicked');
     if(selectedRow === null) {
       //call post
-      setCurrID((prevId) => prevId + 1);
-      const data = {...formCustomer, id: currId}
-      console.log(data);
-      post(data);
+
+      console.log(formCustomer);
+      post(formCustomer);
     } else {
       //call put
       console.log(formCustomer);
-      put(formCustomer.id, formCustomer);
+      const selectedCustomer = customers[selectedRow];
+      put(selectedCustomer.id, formCustomer);
     }
-    setFormCustomer(blankCustomer);
-    setSelectedRow(null);
+   setFormCustomer(formCustomer);
   };
   
   let handleDeleteClick = function () {
