@@ -1,6 +1,7 @@
 import './App.css';
 import {get, getAll, deleteById, post, put} from './memdb';
 import { useState, useEffect } from 'react';
+import CustomerTable from './components/CustomerTable';
 
 function App() {
 
@@ -49,8 +50,6 @@ function App() {
     setFormCustomer(blankCustomer);
     setSelectedRow(null);
   };
-
-  
   
   let handleDeleteClick = function () {
     if(formCustomer.id >= 0){
@@ -82,32 +81,11 @@ function App() {
   return (
     <div className="App">
       <div className='fullbox'>
-      <div className='list-box'>
-      <h1>Customer List</h1>
-      <table>
-                <thead>
-                <tr>
-                    <th>#</th>
-                    <th>Name</th>
-                    <th>Email</th>
-                    <th>Password</th>
-                </tr>
-                </thead>
-                <tbody>
-                {customers.map((customer, index) => (
-                    <tr key={index} onClick={() => handleRowClick(index)} 
-                    style={{ fontWeight: selectedRow === index ? 'bold' : 'normal'}}
-                    >
-                    <td>{index+1}</td>
-                    <td>{customer.name}</td>
-                    <td>{customer.email}</td>
-                    <td>{customer.password}</td>
-                    </tr>
-                ))}
-                </tbody>
-            </table> 
-          </div>
-
+      <CustomerTable 
+          customers={customers}
+          handleRowClick={handleRowClick}
+          selectedRow={selectedRow}>
+      </CustomerTable>
           <div className='wrapper'>        
           <div className='list-box'>
           <h3>{formLabel}</h3>
