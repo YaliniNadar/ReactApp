@@ -1,12 +1,12 @@
 import './App.css';
 import './memdb.js';
 import { useState, useEffect } from 'react';
-import { getAll } from './memdb.js';
+import { deleteById, getAll } from './memdb.js';
 
 function App() {
 
   const [selectedRow, setSelectedRow] = useState(null);
-  const [formCustomer, setFormCustomer] = useState({ name: '', email: "", password: "" })
+  const [formCustomer, setFormCustomer] = useState({ id: "", name: '', email: "", password: "" })
 
   const [customers, setCustomers] = useState([]);
 
@@ -14,11 +14,11 @@ function App() {
     setSelectedRow(selectedRow === index ? null : index);
     if(selectedRow === index) {
 
-      setFormCustomer({ name: '', email: "", password: "" });
+      setFormCustomer({ id: "", name: '', email: "", password: "" });
     } else {
       const selectedCustomer = customers[index];
 
-      setFormCustomer({ name: selectedCustomer.name, email: selectedCustomer.email, password: selectedCustomer.password })
+      setFormCustomer({ id: selectedCustomer.id, name: selectedCustomer.name, email: selectedCustomer.email, password: selectedCustomer.password })
     }
   }
 
@@ -26,12 +26,16 @@ function App() {
     console.log('Add btn clicked');
   };
 
-  const handleDeleteClick = (index) => {
-    console.log('Delete btn clicked');
-  };
+  
+  const handleDeleteClick = (e, index) => {
+    e.preventDefault();
+    const test = deleteById(index);
+    console.log(test);
+    // alert(index);
+  }
 
   const handleCancelClick = () => {
-    setFormCustomer({ name: '', email: "", password: "" });
+    setFormCustomer({ id: "", name: '', email: "", password: "" });
   };
 
   useEffect(() => {
@@ -99,7 +103,7 @@ function App() {
       </tr>
       
   </table>
-  <button onClick={handleDeleteClick}>
+  <button type="button" onClick={(e) => handleDeleteClick(e, formCustomer.id)}>
           Delete
         </button>
         <button onClick={handleAddClick}>
