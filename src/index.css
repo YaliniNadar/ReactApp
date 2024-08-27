@@ -28,3 +28,8 @@ thead {
 	border-block-end: 2px solid;
 	background: whitesmoke;
 }
+
+#formDiv {
+  text-align: left;
+	border-collapse: collapse;
+}
