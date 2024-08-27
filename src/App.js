@@ -31,8 +31,9 @@ function App() {
     console.log('Add btn clicked');
   };
 
-  const handleDeleteClick = () => {
+  const handleDeleteClick = (index) => {
     console.log('Delete btn clicked');
+    const deletedCustomer = cu
   };
 
   const handleCancelClick = () => {
@@ -97,7 +98,7 @@ function App() {
       </tr>
       
   </table>
-  <button onClick={handleDeleteClick}>
+  <button onClick={handleDeleteClick(index)}>
           Delete
         </button>
         <button onClick={handleAddClick}>
