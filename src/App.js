@@ -14,9 +14,9 @@ function App() {
     console.log("in handleInputChange()");
     const name = event.target.name;
     const value = event.target.value;
-    let newFormObject = {...formObject}
+    let newFormObject = {...customers}
     newFormObject[name] = value;
-    setFormObject(newFormObject);
+    setFormCustomer(newFormObject);
   }
 
   function handleRowClick(index) {
@@ -91,7 +91,7 @@ function App() {
       <tr>
         <td>Name: </td>
         <td>
-        <input type="text" value={formCustomer.name} readOnly></input>
+        <input type="text" value={formCustomer.name} onChange={(e) => handleInputChange(e)}></input>
         </td>
       </tr>
       <tr>
