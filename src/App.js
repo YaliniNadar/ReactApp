@@ -5,6 +5,7 @@ import { useState, useEffect } from 'react';
 function App() {
 
   let blankCustomer = {"id": -1, "name":"", "email": "", "password": ""};
+  const [currId, setCurrID] = useState(3);
   const [selectedRow, setSelectedRow] = useState(null);
   const [formCustomer, setFormCustomer] = useState(blankCustomer);
 
@@ -13,10 +14,10 @@ function App() {
   const handleInputChange = function (event) {
     console.log("in handleInputChange()");
     const {name, value} = event.target;
-    setFormCustomer((prevFormdata) => ({
-      ...prevFormdata,
-      [name]: value
-    }));
+    console.log(`Updating ${name} with ${value}`);
+    let newFormObject = {...formCustomer}
+    newFormObject[name] = value;
+    setFormCustomer(newFormObject);
   }
 
   function handleRowClick(index) {
@@ -36,15 +37,17 @@ function App() {
     console.log('Add btn clicked');
     if(selectedRow === null) {
       //call post
-
-      console.log(formCustomer);
-      post(formCustomer);
+      setCurrID((prevId) => prevId + 1);
+      const data = {...formCustomer, id: currId}
+      console.log(data);
+      post(data);
     } else {
       //call put
       console.log(formCustomer);
       put(formCustomer.id, formCustomer);
     }
     setFormCustomer(blankCustomer);
+    setSelectedRow(null);
   };
 
   
@@ -113,19 +116,19 @@ function App() {
       <tr>
         <td>Name: </td>
         <td>
-        <input id="nameText" type="text" value={formCustomer.name} onChange={(e) => handleInputChange(e)}></input>
+        <input id="nameText" name="name" type="text" value={formCustomer.name} onChange={(e) => handleInputChange(e)}></input>
         </td>
       </tr>
       <tr>
         <td>Email: </td>
         <td>
-        <input type="email"value={formCustomer.email} onChange={(e) => handleInputChange(e)}></input>
+        <input type="email" name="email" value={formCustomer.email} onChange={(e) => handleInputChange(e)}></input>
         </td>
       </tr>
       <tr>                    
         <td>Password: </td>
         <td>
-        <input type="text" value={formCustomer.password} onChange={(e) => handleInputChange(e)}></input>
+        <input type="text" name="password" value={formCustomer.password} onChange={(e) => handleInputChange(e)}></input>
         </td>
       </tr>
       
