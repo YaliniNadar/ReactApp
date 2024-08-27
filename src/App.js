@@ -2,6 +2,7 @@ import './App.css';
 import CustomerAddUpdateForm from './components/CustomerAddUpdateForm';
 import {get, getAll, deleteById, post, put} from './memdb';
 import { useState, useEffect } from 'react';
+import CustomerTable from './components/CustomerTable';
 
 function App() {
 
@@ -49,7 +50,6 @@ function App() {
    setFormCustomer(formCustomer);
   };
   
-  
   let handleDeleteClick = function () {
     if(formCustomer.id >= 0){
       deleteById(formCustomer.id);
@@ -80,40 +80,47 @@ function App() {
   return (
     <div className="App">
       <div className='fullbox'>
-      <div className='list-box'>
-      <h1>Customer List</h1>
-      <table>
-                <thead>
-                <tr>
-                    <th>#</th>
-                    <th>Name</th>
-                    <th>Email</th>
-                    <th>Password</th>
-                </tr>
-                </thead>
-                <tbody>
-                {customers.map((customer, index) => (
-                    <tr key={index} onClick={() => handleRowClick(index)} 
-                    style={{ fontWeight: selectedRow === index ? 'bold' : 'normal'}}
-                    >
-                    <td>{index+1}</td>
-                    <td>{customer.name}</td>
-                    <td>{customer.email}</td>
-                    <td>{customer.password}</td>
-                    </tr>
-                ))}
-                </tbody>
-            </table> 
-          </div>
+      <CustomerTable 
+          customers={customers}
+          handleRowClick={handleRowClick}
+          selectedRow={selectedRow}>
+      </CustomerTable>
+          <div className='wrapper'>        
+          <div className='list-box'>
+          <h3>{formLabel}</h3>
+<form>
+  <table>
+      <tr>
+        <td>Name: </td>
+        <td>
+        <input id="nameText" name="name" type="text" value={formCustomer.name} onChange={(e) => handleInputChange(e)}></input>
+        </td>
+      </tr>
+      <tr>
+        <td>Email: </td>
+        <td>
+        <input type="email" name="email" value={formCustomer.email} onChange={(e) => handleInputChange(e)}></input>
+        </td>
+      </tr>
+      <tr>                    
+        <td>Password: </td>
+        <td>
+        <input type="text" name="password" value={formCustomer.password} onChange={(e) => handleInputChange(e)}></input>
+        </td>
+      </tr>
+      
+  </table>
 
-          <CustomerAddUpdateForm formLabel={formLabel}
-                                  formCustomer={formCustomer}
-                                  handleInputChange={handleInputChange}
-                                  handleDelete={handleDeleteClick}
-                                  handleAddClick={handleAddClick}
-                                  handleCancelClick={handleCancelClick}>
+  <input type="button" value="Delete" onClick={handleDeleteClick}>
+        </input>
+        <input type="button" value="Save" onClick={handleAddClick}>
+        </input>
+        <input type="button" value="Cancel" onClick={handleCancelClick}>
+        </input>
 
-          </CustomerAddUpdateForm>
+      </form>
+        </div>
+        </div>
             
     </div>
     </div>
