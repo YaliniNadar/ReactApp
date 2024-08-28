@@ -19,6 +19,31 @@ export async function getAll(setCustomers) {
     fetchData(baseURL);
   }
 
+
+  export async function post(newCustomer, setCustomers) {
+    const myInit = {
+      method: 'POST',
+      mode: 'cors',
+      body: JSON.stringify(newCustomer) 
+    } 
+    console.log("inside post");
+    console.log(newCustomer);
+    const fetchData = async (url) => {
+      try {
+        const response = await fetch(url, myInit);
+
+          if (!response.ok) {
+            throw new Error(`Error posting data: ${response.status}`);
+          }
+      
+       await getAll(setCustomers);
+        } catch (error) {
+          alert(error);
+        }
+      }
+      await fetchData(baseURL);
+    }
+
 // export function get(id) {
 //     let result = null;
 //     for( let item of items){
@@ -41,6 +66,8 @@ export async function getAll(setCustomers) {
 //   item.id = nextid;
 //   items[items.length] = item;
 // }
+
+
 
 // export function put(id, item) {
 //   for( let i = 0; i < items.length; i++){
