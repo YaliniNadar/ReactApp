@@ -1,6 +1,7 @@
 import './App.css';
 import CustomerAddUpdateForm from './components/CustomerAddUpdateForm';
-import {get, getAll, deleteById, post, put} from './memdb';
+import {get, deleteById, post, put} from './memdb';
+import {getAll} from './restdb';
 import { useState, useEffect } from 'react';
 import CustomerTable from './components/CustomerTable';
 
@@ -76,11 +77,11 @@ function App() {
 
   useEffect(() => {
     getCustomers();
-  })
+  },[])
 
   const getCustomers = function(){        
     //log("in getCustomers()");
-    setCustomers(getAll());
+    getAll(setCustomers);
   }
 
   const formLabel = selectedRow === null ? "Add New Customer" : "Update Customer";
