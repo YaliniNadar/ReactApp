@@ -1,7 +1,7 @@
 import './App.css';
 import CustomerAddUpdateForm from './components/CustomerAddUpdateForm';
-import {get, deleteById} from './memdb';
-import {getAll, post, put} from './restdb';
+import {get} from './memdb';
+import {getAll, post, put, deleteById} from './restdb';
 import { useState, useEffect } from 'react';
 import CustomerTable from './components/CustomerTable';
 
@@ -65,6 +65,7 @@ function App() {
       deleteById(formCustomer.id);
       setSelectedRow(null);
 
+
     } else {
       alert("Please Select a Customer to Delete");
     }
@@ -78,7 +79,7 @@ function App() {
 
   useEffect(() => {
     getCustomers();
-  },[])
+  },[formCustomer])
 
   const getCustomers = function(){        
     //log("in getCustomers()");

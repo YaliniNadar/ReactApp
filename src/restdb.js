@@ -65,6 +65,23 @@ export async function getAll(setCustomers) {
     }
   }
 
+export async function deleteById(id) {
+  try {
+    const url = `${baseURL}/${id}`;
+    const response = await fetch(url, {
+      method: 'DELETE',
+    });
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    console.log(`Customer with ID ${id} deleted successfully`);
+  }
+  catch(error) {
+    alert(error)
+  }
+}
+
   
 
 
