@@ -1,7 +1,7 @@
 import './App.css';
 import CustomerAddUpdateForm from './components/CustomerAddUpdateForm';
-import {get, deleteById, put} from './memdb';
-import {getAll, post, post2} from './restdb';
+import {get, deleteById} from './memdb';
+import {getAll, post, put} from './restdb';
 import { useState, useEffect } from 'react';
 import CustomerTable from './components/CustomerTable';
 
@@ -48,7 +48,7 @@ function App() {
       setCurrID((prevId) => prevId + 1);
       const data = {...formCustomer, id: currId}
       console.log(data);
-      post2(data);
+      post(data);
     } else {
       //call put
       console.log(formCustomer);

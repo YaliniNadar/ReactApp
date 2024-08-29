@@ -19,54 +19,53 @@ export async function getAll(setCustomers) {
     fetchData(baseURL);
   }
 
+  export async function post(newCustomer) { 
+    try {
+      const response = await fetch(baseURL, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(newCustomer)
+      });
 
-  export async function post(newCustomer) {
-    const myInit = {
-      method: 'POST',
-      mode: 'cors',
-      body: JSON.stringify(newCustomer) 
-    } 
-    console.log("inside post");
-    console.log(newCustomer);
-    const postData = async (url) => {
-      try {
-        const response = await fetch(url, myInit);
-
-          if (!response.ok) {
-            throw new Error(`Error posting data: ${response.status}`);
-          }
-      
-      //  await getAll(setCustomers);
-        } catch (error) {
-          alert(error);
-        }
+      if (!response.ok) {
+        throw new Error(`Error posting data: ${response.status}`);
       }
-      await postData(baseURL);
+
+      const result = await response.json();
+      console.log('Success:', result);
+      return result;
+
+    } catch (error) {
+      alert(error);
     }
+  }
 
+  export async function put(id, customer){
+    try {
+      const response = await fetch(`${baseURL}/${id}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(customer) 
+      });
 
-    export async function post2(newCustomer) { 
-      try {
-        const response = await fetch(baseURL, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify(newCustomer)
-        });
-
-        if (!response.ok) {
-          throw new Error(`Error posting data: ${response.status}`);
-        }
-
-        const result = await response.json();
-        console.log('Success:', result);
-        return result;
-
-      } catch (error) {
-        alert(error);
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
       }
+
+      const result = await response.json();
+      console.log('Success:', result);
+      return result;
+
+    } catch (error) {
+      alert(error)
     }
+  }
+
+  
 
 
 // export function get(id) {
