@@ -20,7 +20,7 @@ export async function getAll(setCustomers) {
   }
 
 
-  export async function post(newCustomer, setCustomers) {
+  export async function post(newCustomer) {
     const myInit = {
       method: 'POST',
       mode: 'cors',
@@ -28,7 +28,7 @@ export async function getAll(setCustomers) {
     } 
     console.log("inside post");
     console.log(newCustomer);
-    const fetchData = async (url) => {
+    const postData = async (url) => {
       try {
         const response = await fetch(url, myInit);
 
@@ -36,13 +36,38 @@ export async function getAll(setCustomers) {
             throw new Error(`Error posting data: ${response.status}`);
           }
       
-       await getAll(setCustomers);
+      //  await getAll(setCustomers);
         } catch (error) {
           alert(error);
         }
       }
-      await fetchData(baseURL);
+      await postData(baseURL);
     }
+
+
+    export async function post2(newCustomer) { 
+      try {
+        const response = await fetch(baseURL, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(newCustomer)
+        });
+
+        if (!response.ok) {
+          throw new Error(`Error posting data: ${response.status}`);
+        }
+
+        const result = await response.json();
+        console.log('Success:', result);
+        return result;
+
+      } catch (error) {
+        alert(error);
+      }
+    }
+
 
 // export function get(id) {
 //     let result = null;
