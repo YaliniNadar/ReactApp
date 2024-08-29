@@ -1,11 +1,43 @@
 import React, { useState } from "react";
-import {Table} from "react-bootstrap";
+import {Table, Pagination} from "react-bootstrap";
 
 function CustomerTable(props) {
     const [currPage, setCurrPage] = useState(1);
     const itemsPerPage = 10;
 
-    // const 
+    const totalPages = Math.ceil(props.customers.length/itemsPerPage);
+
+    const startIndex =  (currPage-1) * itemsPerPage;
+    const endIndex = currPage * itemsPerPage;
+
+    const currCustomers = props.customers.slice(
+        startIndex,
+        endIndex
+    );
+
+    const handlePageChange = (pageNum) => {
+        setCurrPage(pageNum);
+        props.setSelectedRow(null);
+        props.setFormCustomer(props.blankCustomer);
+    }
+
+    const renderPaginationItems = () => {
+        let items = [];
+        for (let num = 1; num <= totalPages; num++) {
+            items.push(
+                <Pagination.Item
+                    key={num}
+                    active={num === currPage}
+                    onClick={()=>handlePageChange(num)}
+                
+                >
+                {num}
+                </Pagination.Item>
+            );
+        }
+        return items;
+
+    }
 
     return(
         <div className='list-box'>
@@ -20,11 +52,11 @@ function CustomerTable(props) {
                   </tr>
                   </thead>
                   <tbody>
-                  {props.customers.map((customer, index) => (
-                      <tr key={index} onClick={() => props.handleRowClick(index)} 
-                      style={{ fontWeight: props.selectedRow === index ? 'bold' : 'normal'}}
+                  {currCustomers.map((customer) => (
+                      <tr key={customer.id} onClick={() => props.handleRowClick(customer.id)} 
+                      style={{ fontWeight: props.selectedRow === customer.id ? 'bold' : 'normal'}}
                       >
-                      <td>{index+1}</td>
+                      <td>{customer.id}</td>
                       <td>{customer.name}</td>
                       <td>{customer.email}</td>
                       <td>{customer.password}</td>
@@ -32,6 +64,21 @@ function CustomerTable(props) {
                   ))}
                   </tbody>
               </Table> 
+
+              <div>
+                Showing {currCustomers.length} of {props.customers.length}
+              </div>
+
+              <Pagination>
+                <Pagination.First onClick={() => handlePageChange(1)} disabled={currPage===1}/>
+                <Pagination.Prev onClick={() => handlePageChange(currPage-1)} disabled={currPage===1}/>
+
+                  {renderPaginationItems()}
+
+                <Pagination.Next onClick={() => handlePageChange(currPage+1)} disabled={currPage===totalPages}/>
+                <Pagination.Last onClick={() => handlePageChange(totalPages)} disabled={currPage===totalPages}/>
+
+              </Pagination>
         </div>
     );
 }

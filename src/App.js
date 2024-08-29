@@ -1,14 +1,14 @@
 import './App.css';
 import CustomerAddUpdateForm from './components/CustomerAddUpdateForm';
-import {get} from './memdb';
-import {getAll, post, put, deleteById} from './restdb';
+// import {get} from './memdb';
+import {getAll, post, put, deleteById, get} from './restdb';
 import { useState, useEffect } from 'react';
 import CustomerTable from './components/CustomerTable';
 
 function App() {
 
   let blankCustomer = {"id": -1, "name":"", "email": "", "password": ""};
-  const [currId, setCurrID] = useState(3);
+  const [currId, setCurrID] = useState(101);
   const [selectedRow, setSelectedRow] = useState(null);
   const [formCustomer, setFormCustomer] = useState(blankCustomer);
 
@@ -23,14 +23,15 @@ function App() {
     setFormCustomer(newFormObject);
   }
 
-  function handleRowClick(index) {
-    setSelectedRow(selectedRow === index ? null : index);
+  async function handleRowClick(index) {
+    console.log(index);
     if(selectedRow === index) {
-
+      setSelectedRow(null);
       setFormCustomer(blankCustomer);
     } else {
-      const selectedCustomer = customers[index];
-
+      setSelectedRow(index);
+      const selectedCustomer = await get(index);
+      console.log(selectedCustomer);
       setFormCustomer({ id: selectedCustomer.id, name: selectedCustomer.name, email: selectedCustomer.email, password: selectedCustomer.password })
     }
   }
@@ -47,13 +48,17 @@ function App() {
       //call post
       setCurrID((prevId) => prevId + 1);
       const data = {...formCustomer, id: currId}
+      console.log("Getting ready to post data")
       console.log(data);
       post(data);
+
     } else {
       //call put
+      console.log("Getting ready to update the customer")
       console.log(formCustomer);
-      const selectedCustomer = customers[selectedRow];
-      put(selectedCustomer.id, formCustomer);
+      console.log(selectedRow)
+      // const selectedCustomer = get(selectedRow);
+      put(selectedRow, formCustomer);
     }
    setFormCustomer(blankCustomer);
    setSelectedRow(null);
@@ -94,7 +99,11 @@ function App() {
       <CustomerTable 
           customers={customers}
           handleRowClick={handleRowClick}
-          selectedRow={selectedRow}>
+          selectedRow={selectedRow}
+          setSelectedRow={setSelectedRow}
+          setFormCustomer={setFormCustomer}
+          blankCustomer={blankCustomer}
+          >
       </CustomerTable>
       
       <CustomerAddUpdateForm
